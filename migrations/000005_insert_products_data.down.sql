@@ -1,2 +1,2 @@
-DELETE FROM Products;
+DELETE FROM products;
 
