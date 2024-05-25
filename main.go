@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"internTest01/routes"
+)
 
 func main() {
-	fmt.Println("hello world")
+	routes.Router().Run(":8080")
 }
