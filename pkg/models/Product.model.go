@@ -21,15 +21,15 @@ func (c *JSONMap) Scan(v interface{}) error {
 }
 
 type Product struct {
-	ProductID     int     `gorm:"primaryKey" json:"ProductID"`
+	Id            int     `gorm:"primaryKey" json:"id"`
 	Name          string  `json:"name"`
 	Description   string  `json:"description"`
 	Price         float64 `json:"price"`
 	Region        string  `json:"region"`
 	Weight        float64 `json:"weight"`
-	FlavorProfile JSONMap `json:"FlavorProfile"`
-	GrindOption   JSONMap `json:"GrindOption"`
-	RoastLevel    int     `json:"RoastLevel"`
-	ImageURL      string  `json:"ImageURL"`
+	FlavorProfile JSONMap `json:"flavor_profile"`
+	GrindOption   JSONMap `json:"grind_option"`
+	RoastLevel    int     `json:"roastLevel"`
+	ImageURL      string  `json:"imageURL"`
 	Stock         int     `json:"stock"`
 }

@@ -1,13 +1,13 @@
-CREATE TABLE Products (
-    ProductID INT PRIMARY KEY AUTO_INCREMENT,
-    Name VARCHAR(255),
-    Description TEXT,
-    Price DECIMAL(10, 2),
-    Region VARCHAR(100),
-    Weight DECIMAL(10, 2),
-    FlavorProfile JSON,
-    GrindOption JSON,
-    RoastLevel INT NULL,
-    ImageURL VARCHAR(255),
-    Stock INT
+CREATE TABLE products (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
+    description TEXT,
+    price DECIMAL(10, 2),
+    region VARCHAR(100),
+    weight DECIMAL(10, 2),
+    flavor_profile JSON,
+    grind_option JSON,
+    roast_level INT NULL,
+    image_url VARCHAR(255),
+    stock INT
 );

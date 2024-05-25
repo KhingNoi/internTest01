@@ -1,9 +1,9 @@
-CREATE TABLE Users (
-    UserID INT PRIMARY KEY AUTO_INCREMENT,
-    Username VARCHAR(255) NOT NULL UNIQUE,
-    FirstName VARCHAR(255),
-    LastName VARCHAR(255),
-    Email VARCHAR(255) NOT NULL UNIQUE,
-    Phone VARCHAR(50),
-    AvatarURL VARCHAR(255)
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    email VARCHAR(255) NOT NULL UNIQUE,
+    phone VARCHAR(50),
+    avatar_url VARCHAR(255)
 );

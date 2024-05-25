@@ -1,4 +1,4 @@
-INSERT INTO Products (ProductID, Name, Description, Price, Region, Weight, FlavorProfile, GrindOption, RoastLevel, ImageURL, Stock)
+INSERT INTO products (id, name, description, price, region, weight, flavor_profile, grind_option, roast_level, image_url, stock)
 VALUES
 (1, 'Signature Blend', 'A rich, full-bodied coffee with notes of dark chocolate and black cherry. Grown on the slopes of a mist-covered mountain in Central America.', 12.99, 'Central America', 500, '["Dark Chocolate", "Black Cherry"]', '["Whole Bean", "Cafetiere", "Filter", "Espresso"]', 3, 'https://iili.io/H8Y78Qt.webp', 5),
 (2, 'Golden Sunrise', 'A smooth and bright coffee with a citrusy kick. Sourced from the rolling hills of Africa.', 10.99, 'Africa', 500, '["Citrus"]', '["Whole Bean", "Cafetiere", "Filter", "Espresso"]', 2, 'https://iili.io/H8Y7WEg.webp', 9),

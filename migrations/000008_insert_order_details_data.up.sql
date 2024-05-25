@@ -1,4 +1,4 @@
-INSERT INTO OrderDetails (OrderID, ProductID, Quantity, Price) VALUES
+INSERT INTO order_details (order_id, product_id, quantity, price) VALUES
 (1, 1, 2, 19.98),
 (1, 3, 1, 6.99),
 (2, 2, 1, 10.99),

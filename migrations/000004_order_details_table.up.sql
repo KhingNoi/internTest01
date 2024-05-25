@@ -1,9 +1,9 @@
-CREATE TABLE OrderDetails (
-    OrderDetailID INT PRIMARY KEY AUTO_INCREMENT,
-    OrderID INT,
-    ProductID INT,
-    Quantity INT,
-    Price DECIMAL(10, 2),
-    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
-    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+CREATE TABLE order_details (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    order_id INT,
+    product_id INT,
+    quantity INT,
+    price DECIMAL(10, 2),
+    FOREIGN KEY (order_id) REFERENCES orders(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
 );

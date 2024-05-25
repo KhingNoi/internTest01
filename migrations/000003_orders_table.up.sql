@@ -1,8 +1,8 @@
-CREATE TABLE Orders (
-    OrderID INT PRIMARY KEY AUTO_INCREMENT,
-    UserID INT,
-    OrderDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    Status VARCHAR(50),
-    Total DECIMAL(10, 2),
-    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+CREATE TABLE orders (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(50),
+    total DECIMAL(10, 2),
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
