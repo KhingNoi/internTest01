@@ -18,6 +18,7 @@ func Router(db *gorm.DB) AppRouter {
 
 	controllers.HelpCheckController(main)
 	controllers.ProductController(api, db)
+	controllers.UserController(api, db)
 	return router
 }
 
