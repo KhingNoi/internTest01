@@ -1,0 +1,14 @@
+services:
+  db:
+    image: mysql/mysql-server:8.0
+    command: --sort_buffer_size=512K
+    volumes:
+      - ./db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: intern_test
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password
+    ports:
+      - 3306:3306
+    restart: always

@@ -26,5 +26,8 @@ go.work
 # Utilize folder
 /.idea/*
 
+#db data
+db_data/*
+cmd/tmp/*
 # go.mod
 go.sum
