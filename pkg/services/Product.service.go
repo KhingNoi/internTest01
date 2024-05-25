@@ -16,3 +16,13 @@ func GetProductList(context *gin.Context, db *gorm.DB) {
 	}
 	context.JSON(http.StatusOK, products)
 }
+
+func GetProductById(context *gin.Context, db *gorm.DB) {
+	id := context.Param("id")
+	product, err := repositories.FindProductById(db, id)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	context.JSON(http.StatusOK, product)
+}

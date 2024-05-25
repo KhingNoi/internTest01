@@ -12,4 +12,7 @@ func ProductController(routerGroup *gin.RouterGroup, db *gorm.DB) {
 	productRoute.GET("", func(context *gin.Context) {
 		services.GetProductList(context, db)
 	})
+	productRoute.GET("/:id", func(context *gin.Context) {
+		services.GetProductById(context, db)
+	})
 }
