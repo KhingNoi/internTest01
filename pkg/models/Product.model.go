@@ -40,3 +40,7 @@ type ProductWithPaginate struct {
 	Total *int `json:"total,omitempty" query:"total"`
 	Data  []Product
 }
+
+type SearchTermPayload struct {
+	Name string `json:"name,omitempty"`
+}
