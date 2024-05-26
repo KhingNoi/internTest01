@@ -12,20 +12,25 @@ func FindProductById(db *gorm.DB, id string) (models.Product, error) {
 	return product, queryResult.Error
 }
 
-func FindProductListWithPagination(db *gorm.DB, page int, size int) ([]models.Product, int64, error) {
+func FindProductListWithPagination(db *gorm.DB, page int, size int) ([]models.Product, int, error) {
 	var productsWithPageAndSize []models.Product
-	var total int64
-	if err := db.Model(&models.Product{}).Count(&total).Error; err != nil {
-		return nil, 0, err
-	}
+
 	offset := (page - 1) * size
 	queryResult := db.Limit(size).Offset(offset).Find(&productsWithPageAndSize)
 	if queryResult.Error != nil {
 		return nil, 0, queryResult.Error
 	}
+	total := len(productsWithPageAndSize)
 	return productsWithPageAndSize, total, nil
 }
 
-// func FindProductByName(db *gorm.DB, name string) ([]models.Product, int64, error) {
-// 	var
-// }
+func FindProductListByName(db *gorm.DB, searchTerm models.SearchTermPayload, page int, size int) ([]models.Product, int, error) {
+	var productsByName []models.Product
+	offset := (page - 1) * size
+	queryResult := db.Where("name LIKE ?", searchTerm.Name+"%").Limit(size).Offset(offset).Find(&productsByName)
+	if queryResult.Error != nil {
+		return nil, 0, queryResult.Error
+	}
+	total := len(productsByName)
+	return productsByName, total, nil
+}
