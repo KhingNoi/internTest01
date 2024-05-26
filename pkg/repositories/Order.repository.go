@@ -6,6 +6,12 @@ import (
 	"gorm.io/gorm"
 )
 
+func FindOrderById(db gorm.DB, id string) (models.Order, error) {
+	var order models.Order
+	queryResult := db.First(&order, id)
+	return order, queryResult.Error
+}
+
 func CreateOrderWithDetails(db *gorm.DB, order *models.Order, orderDetails []*models.OrderDetails) error {
 	transaction := db.Begin()
 
