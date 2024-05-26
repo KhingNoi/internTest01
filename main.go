@@ -1,7 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"internTest01/database"
+	"internTest01/routes"
+)
 
 func main() {
-	fmt.Println("hello world")
+	db := database.ConnectDatabase()
+	defer database.CloseDB()
+	routes.Router(db).Run(":8080")
 }
