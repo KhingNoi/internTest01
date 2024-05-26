@@ -1,7 +1,6 @@
 package services
 
 import (
-	"fmt"
 	"internTest01/pkg/repositories"
 	"net/http"
 	"strconv"
@@ -30,7 +29,6 @@ func GetProductById(context *gin.Context, db *gorm.DB) {
 }
 
 func GetProductListWithPagination(context *gin.Context, db *gorm.DB) {
-	fmt.Println("trigger")
 	page, _ := strconv.Atoi(context.DefaultQuery("page", "1"))
 	size, _ := strconv.Atoi(context.DefaultQuery("size", "12"))
 	products, total, err := repositories.FindProductListWithPagination(db, page, size)
@@ -46,3 +44,7 @@ func GetProductListWithPagination(context *gin.Context, db *gorm.DB) {
 		"data":  products,
 	})
 }
+
+// func GetProductListByName(context *gin.Context, db *gorm.DB){
+
+// }
