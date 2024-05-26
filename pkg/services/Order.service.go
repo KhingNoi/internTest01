@@ -3,7 +3,6 @@ package services
 import (
 	"internTest01/pkg/models"
 	"internTest01/pkg/repositories"
-	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -23,11 +22,11 @@ func CreateOrderWithData(context *gin.Context, db *gorm.DB) {
 	for _, detail := range orderRequestData.OrderDetailList {
 		currentStock, _ := repositories.FindStockById(db, strconv.Itoa(detail.ProductId))
 		if currentStock.Stock == 0 {
-			context.JSON(http.StatusConflict, gin.H{"message": currentStock.Name + " out of stock"})
+			context.JSON(http.StatusConflict, gin.H{"message": currentStock.Name + " " + "out of stock"})
 			return
 		}
 		if detail.Quantity > currentStock.Stock {
-			context.JSON(http.StatusConflict, gin.H{"message": "amount of " + currentStock.Name + " more than currently in stock."})
+			context.JSON(http.StatusConflict, gin.H{"message": currentStock.Name + " " + "insufficient stock"})
 			return
 		}
 		orderDetails = append(orderDetails, &models.OrderDetails{
@@ -52,7 +51,7 @@ func CreateOrderWithData(context *gin.Context, db *gorm.DB) {
 
 	err := repositories.CreateOrderWithDetails(db, order, orderDetails)
 	if err != nil {
-		log.Fatal("failed to create order with details:", err)
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
 
 	response := gin.H{
@@ -83,24 +82,30 @@ func UpdateProductStockByAmountRequest(context *gin.Context, db *gorm.DB) {
 		context.JSON(http.StatusForbidden, gin.H{"error": "current order status is not Pending"})
 		return
 	}
-	orderAfterUpdateStatus, err := repositories.UpdateOrderStatus(db, currentOrder)
-	if err != nil {
-		if err.Error() == "record not found" {
-			context.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
-			return
-		} else {
-			context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-	}
-	for _, detail := range orderAfterUpdateStatus.OrderDetailList {
+
+	for _, detail := range currentOrder.OrderDetailList {
 		product, err := repositories.UpdateProductStock(db, detail.Quantity, detail.ProductId)
-		if err.Error() == "out of stock" || err.Error() == "insufficient stock" {
-			context.JSON(http.StatusConflict, gin.H{"message": product.Name + " " + err.Error()})
-			return
+		if err != nil {
+			if err.Error() == "out of stock" || err.Error() == "insufficient stock" {
+				context.JSON(http.StatusConflict, gin.H{"message": product.Name + " " + err.Error()})
+				return
+			} else {
+				context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+				return
+			}
 		}
 	}
 
+	updateErr := repositories.UpdateOrderStatus(db, currentOrder)
+	if updateErr != nil {
+		if updateErr.Error() == "record not found" {
+			context.JSON(http.StatusNotFound, gin.H{"error": updateErr.Error()})
+			return
+		} else {
+			context.JSON(http.StatusInternalServerError, gin.H{"error": updateErr.Error()})
+			return
+		}
+	}
 	context.JSON(http.StatusOK, gin.H{"message": "order success"})
 
 }

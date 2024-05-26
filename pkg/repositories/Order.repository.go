@@ -38,12 +38,12 @@ func CreateOrderWithDetails(db *gorm.DB, order *models.Order, orderDetails []*mo
 	return nil
 }
 
-func UpdateOrderStatus(db *gorm.DB, order models.OrderWithOrderDetail) (models.OrderWithOrderDetail, error) {
+func UpdateOrderStatus(db *gorm.DB, order models.OrderWithOrderDetail) error {
 	order.Status = models.PROCESSING_STATUS
 	if err := db.Save(&order).Error; err != nil {
-		return order, err
+		return err
 	}
-	return order, nil
+	return nil
 }
 
 func UpdateProductStock(db *gorm.DB, amount int, productId int) (models.Product, error) {
