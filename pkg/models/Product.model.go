@@ -33,3 +33,10 @@ type Product struct {
 	ImageURL      string  `json:"imageURL"`
 	Stock         int     `json:"stock"`
 }
+
+type ProductWithPaginate struct {
+	Page  *int `json:"page,omitempty" query:"page"`
+	Size  *int `json:"size,omitempty" query:"size"`
+	Total *int `json:"total,omitempty" query:"total"`
+	Data  []Product
+}

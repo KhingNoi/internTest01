@@ -9,8 +9,9 @@ import (
 
 func ProductController(routerGroup *gin.RouterGroup, db *gorm.DB) {
 	productRoute := routerGroup.Group("/product")
-	productRoute.GET("", func(context *gin.Context) {
-		services.GetProductList(context, db)
+
+	productRoute.GET("/", func(context *gin.Context) {
+		services.GetProductListWithPagination(context, db)
 	})
 	productRoute.GET("/:id", func(context *gin.Context) {
 		services.GetProductById(context, db)
