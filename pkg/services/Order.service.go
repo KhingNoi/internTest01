@@ -20,7 +20,11 @@ func CreateOrderWithData(context *gin.Context, db *gorm.DB) {
 
 	var orderDetails []*models.OrderDetails
 	for _, detail := range orderRequestData.OrderDetailList {
-		currentStock, _ := repositories.FindStockById(db, strconv.Itoa(detail.ProductId))
+		currentStock, err := repositories.FindStockById(db, strconv.Itoa(detail.ProductId))
+		if currentStock.Name == "" {
+			context.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+			return
+		}
 		if currentStock.Stock == 0 {
 			context.JSON(http.StatusConflict, gin.H{"message": currentStock.Name + " " + "out of stock"})
 			return
@@ -52,6 +56,7 @@ func CreateOrderWithData(context *gin.Context, db *gorm.DB) {
 	err := repositories.CreateOrderWithDetails(db, order, orderDetails)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
 	}
 
 	response := gin.H{
