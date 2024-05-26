@@ -19,4 +19,8 @@ func ProductController(routerGroup *gin.RouterGroup, db *gorm.DB) {
 	productRoute.GET("/search", func(context *gin.Context) {
 		services.SearchProductListByName(context, db)
 	})
+	productRoute.GET("/checkStock/:id", func(context *gin.Context) {
+		services.CheckStockByProductId(context, db)
+	})
+
 }

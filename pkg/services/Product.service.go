@@ -68,3 +68,22 @@ func SearchProductListByName(context *gin.Context, db *gorm.DB) {
 		"data":  productList,
 	})
 }
+
+func CheckStockByProductId(context *gin.Context, db *gorm.DB) {
+	id := context.Param("id")
+	if _, strconvErr := strconv.Atoi(id); strconvErr != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format"})
+		return
+	}
+	stock, err := repositories.FindStockById(db, id)
+	if err != nil {
+		if err.Error() == "record not found" {
+			context.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+			return
+		} else {
+			context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+	}
+	context.JSON(http.StatusOK, stock)
+}

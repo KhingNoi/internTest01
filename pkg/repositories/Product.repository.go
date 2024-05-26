@@ -36,3 +36,9 @@ func FindProductListByName(db *gorm.DB, searchTerm models.SearchTermPayload, pag
 	total := len(productsByName)
 	return productsByName, total, nil
 }
+
+func FindStockById(db *gorm.DB, id string) (models.StockData, error) {
+	var stock models.StockData
+	queryResult := db.Model(&models.Product{}).Select("name,stock").First(&stock, id)
+	return stock, queryResult.Error
+}

@@ -44,3 +44,8 @@ type ProductWithPaginate struct {
 type SearchTermPayload struct {
 	Name string `json:"name,omitempty"`
 }
+
+type StockData struct {
+	Name  string `json:"name"`
+	Stock int    `json:"stock"`
+}
