@@ -57,8 +57,50 @@ func CreateOrderWithData(context *gin.Context, db *gorm.DB) {
 
 	response := gin.H{
 		"message": "Order with details created successfully",
-		"order":   order,
-		"details": orderDetails,
 	}
 	context.JSON(http.StatusOK, response)
+}
+
+func UpdateProductStockByAmountRequest(context *gin.Context, db *gorm.DB) {
+	id := context.Param("id")
+	if _, strconvErr := strconv.Atoi(id); strconvErr != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format"})
+		return
+	}
+
+	currentOrder, err := repositories.FindOrderById(db, id)
+	if err != nil {
+		if err.Error() == "record not found" {
+			context.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+			return
+		} else {
+			context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+	}
+
+	if currentOrder.Status != models.PENDING_STATUS {
+		context.JSON(http.StatusForbidden, gin.H{"error": "current order status is not Pending"})
+		return
+	}
+	orderAfterUpdateStatus, err := repositories.UpdateOrderStatus(db, currentOrder)
+	if err != nil {
+		if err.Error() == "record not found" {
+			context.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+			return
+		} else {
+			context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+	}
+	for _, detail := range orderAfterUpdateStatus.OrderDetailList {
+		product, err := repositories.UpdateProductStock(db, detail.Quantity, detail.ProductId)
+		if err.Error() == "out of stock" || err.Error() == "insufficient stock" {
+			context.JSON(http.StatusConflict, gin.H{"message": product.Name + " " + err.Error()})
+			return
+		}
+	}
+
+	context.JSON(http.StatusOK, gin.H{"message": "order success"})
+
 }

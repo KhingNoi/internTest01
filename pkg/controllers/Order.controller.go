@@ -12,4 +12,7 @@ func OrderController(routerGroup *gin.RouterGroup, db *gorm.DB) {
 	userRoute.POST("/create", func(context *gin.Context) {
 		services.CreateOrderWithData(context, db)
 	})
+	userRoute.PATCH("/submit/:id", func(context *gin.Context) {
+		services.UpdateProductStockByAmountRequest(context, db)
+	})
 }

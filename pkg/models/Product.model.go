@@ -27,10 +27,10 @@ type Product struct {
 	Price         float64 `json:"price"`
 	Region        string  `json:"region"`
 	Weight        float64 `json:"weight"`
-	FlavorProfile JSONMap `json:"flavor_profile"`
-	GrindOption   JSONMap `json:"grind_option"`
-	RoastLevel    int     `json:"roastLevel"`
-	ImageURL      string  `json:"imageURL"`
+	FlavorProfile JSONMap `json:"flavor_profile" gorm:"type:json"`
+	GrindOption   JSONMap `json:"grind_option" gorm:"type:json"`
+	RoastLevel    *int    `json:"roast_level"`
+	ImageURL      string  `json:"image_url"`
 	Stock         int     `json:"stock"`
 }
 
