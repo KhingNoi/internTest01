@@ -8,9 +8,6 @@ type OrderDetails struct {
 	ProductId int     `json:"product_id"`
 	Quantity  int     `json:"quantity"`
 	Price     float64 `json:"price"`
-
-	Order   Order   `gorm:"foreignKey:OrderId;references:Id"`
-	Product Product `gorm:"foreignKey:ProductId;references:Id"`
 }
 
 type Order struct {
@@ -21,12 +18,24 @@ type Order struct {
 	Total     float64   `json:"total"`
 }
 
+type OrderWithOrderDetail struct {
+	Id              int            `gorm:"primaryKey" json:"id"`
+	UserID          int            `json:"user_id"`
+	OrderDate       time.Time      `json:"order_date"`
+	Status          string         `json:"status"`
+	Total           float64        `json:"total"`
+	OrderDetailList []OrderDetails `gorm:"foreignKey:OrderId;references:Id"`
+}
+
+func (OrderWithOrderDetail) TableName() string {
+	return "orders"
+}
+
 type OrderDetailPayload struct {
 	ProductId int     `json:"product_id"`
 	Quantity  int     `json:"quantity"`
 	Price     float64 `json:"price"`
 }
-
 type OrderPayload struct {
 	UserId          int                  `json:"user_id"`
 	OrderDetailList []OrderDetailPayload `json:"order_detail_list"`
