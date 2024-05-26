@@ -8,5 +8,5 @@ type User struct {
 	Email     string  `json:"email"`
 	Phone     string  `json:"phone"`
 	AvatarURL string  `json:"avatar_url"`
-	Orders    []Order `gorm:"foreignKey:UserID"`
+	Orders    []Order `gorm:"foreignKey:UserID;references:Id"`
 }
