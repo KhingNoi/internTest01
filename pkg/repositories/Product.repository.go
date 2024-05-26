@@ -8,8 +8,8 @@ import (
 
 func FindProductById(db *gorm.DB, id string) (models.Product, error) {
 	var product models.Product
-	result := db.First(&product, id)
-	return product, result.Error
+	queryResult := db.First(&product, id)
+	return product, queryResult.Error
 }
 
 func FindProductListWithPagination(db *gorm.DB, page int, size int) ([]models.Product, int64, error) {
@@ -19,9 +19,13 @@ func FindProductListWithPagination(db *gorm.DB, page int, size int) ([]models.Pr
 		return nil, 0, err
 	}
 	offset := (page - 1) * size
-	result := db.Limit(size).Offset(offset).Find(&productsWithPageAndSize)
-	if result.Error != nil {
-		return nil, 0, result.Error
+	queryResult := db.Limit(size).Offset(offset).Find(&productsWithPageAndSize)
+	if queryResult.Error != nil {
+		return nil, 0, queryResult.Error
 	}
 	return productsWithPageAndSize, total, nil
 }
+
+// func FindProductByName(db *gorm.DB, name string) ([]models.Product, int64, error) {
+// 	var
+// }
