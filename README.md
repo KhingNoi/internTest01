@@ -123,7 +123,9 @@ How to installing and setting up your service.
 ![image](https://github.com/KhingNoi/internTest01/assets/157562653/79b7f70b-f846-4860-91e6-9fe8c8eca1e3)
 
 
-### [figma click here](https://www.figma.com/board/OErXYD0odN0JQzE068A77f/Untitled?node-id=0-1&t=yvQuoEdeL58iXdOz-0)
+## Hint 
+- Postman collection is located in the postman_collection folder.
+- [figma click here](https://www.figma.com/board/OErXYD0odN0JQzE068A77f/Untitled?node-id=0-1&t=yvQuoEdeL58iXdOz-0)
 
 
 
