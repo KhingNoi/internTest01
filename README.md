@@ -1,3 +1,7 @@
+## InternTest01
+
+
+
 ### Prerequisites
 
 List the prerequisites required to run your project. Include any software or tools that need to be installed.
@@ -40,35 +44,6 @@ How to installing and setting up your service.
    air
    ```
 
-### Running the Containers
-
-1. start the container(s) using docker or docker Compose. Include any necessary commands or configuration files.
-
-   ```bash
-   docker-compose up -d
-   ```
-
-2. If using docker directly
-   [Document](https://hub.docker.com/r/mysql/mysql-server/)
-   Pull MySQL image (if not already pulled)
-
-   ```bash
-   docker pull mysql/mysql-server:tag
-   ```
-
-   Start MySQL container
-
-   ```bash
-   docker run --name=mysql1 -d mysql/mysql-server:tag
-   ```
-
-### FAQ
-
-1. When we system not found `air` command, we should set PATH environment variable in `~/.bashrc`, `~/.bash_profile`, `~/.zshrc`
-   ```bash
-   export PATH=$PATH:$(go env GOPATH)/bin
-   ```
-
 ### Migration
 
 1. Install go migate
@@ -102,5 +77,36 @@ How to installing and setting up your service.
 
    \*If you run migration up and “no change” even if in your db not have given table or some error occorred
    run migration down to clear all cache before you run migration up
+
+
+### Running the Containers
+
+1. start the container(s) using docker or docker Compose. Include any necessary commands or configuration files.
+
+   ```bash
+   docker-compose up -d
+   ```
+
+2. If using docker directly
+   [Document](https://hub.docker.com/r/mysql/mysql-server/)
+   Pull MySQL image (if not already pulled)
+
+   ```bash
+   docker pull mysql/mysql-server:tag
+   ```
+
+   Start MySQL container
+
+   ```bash
+   docker run --name=mysql1 -d mysql/mysql-server:tag
+   ```
+
+### FAQ
+
+1. When we system not found `air` command, we should set PATH environment variable in `~/.bashrc`, `~/.bash_profile`, `~/.zshrc`
+   ```bash
+   export PATH=$PATH:$(go env GOPATH)/bin
+   ```
+
 
 
