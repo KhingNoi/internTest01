@@ -60,6 +60,10 @@ func SearchProductListByName(context *gin.Context, db *gorm.DB) {
 		HandleDatabaseError(context, err)
 		return
 	}
+	if len(productList) == 0 {
+		HandleError(context, http.StatusNotFound, "Record not found")
+		return
+	}
 
 	context.JSON(http.StatusOK, gin.H{
 		"total": total,
