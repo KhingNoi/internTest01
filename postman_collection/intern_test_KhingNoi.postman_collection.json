@@ -1,0 +1,746 @@
+{
+	"info": {
+		"_postman_id": "ff03ec14-2a54-4658-a189-d024454c1d5c",
+		"name": "intern_test_KhingNoi",
+		"description": "ให้เทสไล่ไฟล์จากบนลงล่างจนจบ flow นะจ๊ะ\n\nก่อนเทส migrate database ก่อนด้วย",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26053373",
+		"_collection_link": "https://winter-moon-856105.postman.co/workspace/Team-Workspace~72639685-958d-4421-8d62-4e9544d29173/collection/26053373-ff03ec14-2a54-4658-a189-d024454c1d5c?action=share&source=collection_link&creator=26053373"
+	},
+	"item": [
+		{
+			"name": "Get-Product-List",
+			"item": [
+				{
+					"name": "Get product list by pagination",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/product?page=1&size=20",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"product"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get-Product-By-Id",
+			"item": [
+				{
+					"name": "[400] Get-Product-By-Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/product/76asd",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"product",
+								"76asd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[404] Get-Product-By-Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/product/7678679",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"product",
+								"7678679"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get-Product-By-Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/product/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"product",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get-User-By-Id",
+			"item": [
+				{
+					"name": "[400]Get-User-By-Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/user/212asd",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"212asd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[404]Get-User-By-Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/user/2123",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"2123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get-User-By-Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/user/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Search-Product-By-Name",
+			"item": [
+				{
+					"name": "[404]Search-Product-By-Name",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Wasdasd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/product/search?page=1&size=5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"product",
+								"search"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search-Product-By-Name",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"W\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "123{    \"name\":\"W\"}",
+							"host": [
+								"123{    \"name\""
+							],
+							"port": "\"W\"}"
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Check-Product-Stock-By-Id",
+			"item": [
+				{
+					"name": "[400]Check-Product-Stock-By-Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/product/checkStock/1asdasd",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"product",
+								"checkStock",
+								"1asdasd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[404]Check-Product-Stock-By-Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/product/checkStock/1123",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"product",
+								"checkStock",
+								"1123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check-Product-Stock-By-Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/product/checkStock/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"product",
+								"checkStock",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Create-Order-With-Detail",
+			"item": [
+				{
+					"name": "[400]Create-New-Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\t{\n\t\"user_id\": 3 ,\n\t\"order_detail_list\": [\n\t\t\t{\n\t\t\t\t\t\"product_id\": \"asdasd1\" ,\n\t\t\t\t\t\"quantity\" : 1 ,\n\t\t\t\t\t\"price\" : 19.98\n\t\t\t},\n\t\t\t{\n\t\t\t\t\t\"product_id\": 18 ,\n\t\t\t\t\t\"quantity\" : 1 ,\n\t\t\t\t\t\"price\" : 11.99\n\t\t\t}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/order/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"order",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[404]Create-New-Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\t{\n\t\"user_id\": 3 ,\n\t\"order_detail_list\": [\n\t\t\t{\n\t\t\t},\n\t\t\t{\n\n\t\t\t}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/order/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"order",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[409 Insufficient Stock]Create-New-Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\t{\n\t\"user_id\": 3 ,\n\t\"order_detail_list\": [\n\t\t\t{\n\t\t\t\t\t\"product_id\": 1 ,\n\t\t\t\t\t\"quantity\" : 1 ,\n\t\t\t\t\t\"price\" : 19.98\n\t\t\t},\n\t\t\t{\n\t\t\t\t\t\"product_id\": 18 ,\n\t\t\t\t\t\"quantity\" : 14,\n\t\t\t\t\t\"price\" : 11.99\n\t\t\t}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/order/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"order",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[409 Out Of Stock]Create-New-Order Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\t{\n\t\"user_id\": 3 ,\n\t\"order_detail_list\": [\n\t\t\t{\n\t\t\t\t\t\"product_id\": 1 ,\n\t\t\t\t\t\"quantity\" : 1 ,\n\t\t\t\t\t\"price\" : 19.98\n\t\t\t},\n\t\t\t{\n\t\t\t\t\t\"product_id\": 19 ,\n\t\t\t\t\t\"quantity\" : 10,\n\t\t\t\t\t\"price\" : 11.99\n\t\t\t}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/order/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"order",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create-New-Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\t{\n\t\"user_id\": 3 ,\n\t\"order_detail_list\": [\n\t\t\t{\n\t\t\t\t\t\"product_id\": 1 ,\n\t\t\t\t\t\"quantity\" : 3 ,\n\t\t\t\t\t\"price\" : 19.98\n\t\t\t},\n\t\t\t{\n\t\t\t\t\t\"product_id\": 18 ,\n\t\t\t\t\t\"quantity\" : 1 ,\n\t\t\t\t\t\"price\" : 11.99\n\t\t\t}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/order/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"order",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Update-Status-And-Stock",
+			"item": [
+				{
+					"name": "[409 out of stock]Update-Product-Stock",
+					"item": [
+						{
+							"name": "Prepare",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\t{\n\t\"user_id\": 3 ,\n\t\"order_detail_list\": [\n\t\t\t{\n\t\t\t\t\t\"product_id\": 17 ,\n\t\t\t\t\t\"quantity\" : 4 ,\n\t\t\t\t\t\"price\" : 11.99\n\t\t\t}\n\t]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/order/create",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"order",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Prepare Copy",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\t{\n\t\"user_id\": 1 ,\n\t\"order_detail_list\": [\n            {\n\t\t\t\t\t\"product_id\": 17 ,\n\t\t\t\t\t\"quantity\" : 4 ,\n\t\t\t\t\t\"price\" : 11.99\n\t\t\t}\n\t]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/order/create",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"order",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Prepare",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/order/submit/6",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"order",
+										"submit",
+										"6"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[409 out of stock]Update-Product-Stock",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/order/submit/7",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"order",
+										"submit",
+										"7"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "[409 Insufficient Stock]Update-Product-Stock",
+					"item": [
+						{
+							"name": "Prepare",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\t{\n\t\"user_id\": 1 ,\n\t\"order_detail_list\": [\n\t\t\t{\n\t\t\t\t\t\"product_id\": 5 ,\n\t\t\t\t\t\"quantity\" : 8 ,\n\t\t\t\t\t\"price\" : 11.99\n\t\t\t}\n\t]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/order/create",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"order",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Prepare Copy",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\t{\n\t\"user_id\": 1 ,\n\t\"order_detail_list\": [\n\t\t\t{\n\t\t\t\t\t\"product_id\": 5 ,\n\t\t\t\t\t\"quantity\" : 5 ,\n\t\t\t\t\t\"price\" : 11.99\n\t\t\t}\n\t]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/order/create",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"order",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Prepare",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/order/submit/8",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"order",
+										"submit",
+										"8"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[409 Insufficient Stock]Update-Product-Stock",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/order/submit/9",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"order",
+										"submit",
+										"9"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "[400]Update-Product-Stock",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/order/submit/5678asd",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"order",
+								"submit",
+								"5678asd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[404]Update-Product-Stock",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/order/submit/56789",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"order",
+								"submit",
+								"56789"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update-Product-Stock",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/order/submit/5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"order",
+								"submit",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
