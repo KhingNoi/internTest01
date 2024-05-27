@@ -35,7 +35,7 @@ How to installing and setting up your service.
 2. Install dependency package
 
    ```bash
-   go get ./cmd
+   go get 
    ```
 
 3. For Localhost | Use `air` package to build and run the project
