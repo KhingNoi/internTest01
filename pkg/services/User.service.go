@@ -11,19 +11,16 @@ import (
 
 func GetUserById(context *gin.Context, db *gorm.DB) {
 	id := context.Param("id")
-	if _, strconvErr := strconv.Atoi(id); strconvErr != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format"})
+	if _, err := strconv.Atoi(id); err != nil {
+		HandleError(context, http.StatusBadRequest, "Invalid ID format")
 		return
 	}
 
 	user, err := repositories.FindUserById(db, id)
 	if err != nil {
-		if err.Error() == "record not found" {
-			context.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
-			return
-		} else {
-			context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		}
+		HandleDatabaseError(context, err)
+		return
 	}
+
 	context.JSON(http.StatusOK, user)
 }

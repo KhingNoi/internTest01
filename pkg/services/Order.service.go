@@ -3,7 +3,6 @@ package services
 import (
 	"internTest01/pkg/models"
 	"internTest01/pkg/repositories"
-	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -15,19 +14,27 @@ import (
 func CreateOrderWithData(context *gin.Context, db *gorm.DB) {
 	var orderRequestData models.OrderPayload
 	if err := context.BindJSON(&orderRequestData); err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON"})
+		HandleError(context, http.StatusBadRequest, "Invalid JSON")
 		return
 	}
 
 	var orderDetails []*models.OrderDetails
 	for _, detail := range orderRequestData.OrderDetailList {
-		currentStock, _ := repositories.FindStockById(db, strconv.Itoa(detail.ProductId))
+		currentStock, err := repositories.FindStockById(db, strconv.Itoa(detail.ProductId))
+		if err != nil {
+			HandleDatabaseError(context, err)
+			return
+		}
+		if currentStock.Name == "" {
+			HandleError(context, http.StatusNotFound, "Product not found")
+			return
+		}
 		if currentStock.Stock == 0 {
-			context.JSON(http.StatusConflict, gin.H{"message": currentStock.Name + " out of stock"})
+			HandleError(context, http.StatusConflict, currentStock.Name+" out of stock")
 			return
 		}
 		if detail.Quantity > currentStock.Stock {
-			context.JSON(http.StatusConflict, gin.H{"message": "amount of " + currentStock.Name + " more than currently in stock."})
+			HandleError(context, http.StatusConflict, currentStock.Name+" insufficient stock")
 			return
 		}
 		orderDetails = append(orderDetails, &models.OrderDetails{
@@ -52,55 +59,49 @@ func CreateOrderWithData(context *gin.Context, db *gorm.DB) {
 
 	err := repositories.CreateOrderWithDetails(db, order, orderDetails)
 	if err != nil {
-		log.Fatal("failed to create order with details:", err)
+		HandleDatabaseError(context, err)
+		return
 	}
 
-	response := gin.H{
-		"message": "Order with details created successfully",
-	}
-	context.JSON(http.StatusOK, response)
+	context.JSON(http.StatusOK, gin.H{"message": "Order with details created successfully"})
 }
 
 func UpdateProductStockByAmountRequest(context *gin.Context, db *gorm.DB) {
 	id := context.Param("id")
-	if _, strconvErr := strconv.Atoi(id); strconvErr != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format"})
+	if _, err := strconv.Atoi(id); err != nil {
+		HandleError(context, http.StatusBadRequest, "Invalid ID format")
 		return
 	}
 
 	currentOrder, err := repositories.FindOrderById(db, id)
 	if err != nil {
-		if err.Error() == "record not found" {
-			context.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
-			return
-		} else {
-			context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
+		HandleDatabaseError(context, err)
+		return
 	}
 
 	if currentOrder.Status != models.PENDING_STATUS {
-		context.JSON(http.StatusForbidden, gin.H{"error": "current order status is not Pending"})
+		HandleError(context, http.StatusForbidden, "Current order status is not Pending")
 		return
 	}
-	orderAfterUpdateStatus, err := repositories.UpdateOrderStatus(db, currentOrder)
-	if err != nil {
-		if err.Error() == "record not found" {
-			context.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
-			return
-		} else {
-			context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-	}
-	for _, detail := range orderAfterUpdateStatus.OrderDetailList {
+
+	for _, detail := range currentOrder.OrderDetailList {
 		product, err := repositories.UpdateProductStock(db, detail.Quantity, detail.ProductId)
-		if err.Error() == "out of stock" || err.Error() == "insufficient stock" {
-			context.JSON(http.StatusConflict, gin.H{"message": product.Name + " " + err.Error()})
-			return
+		if err != nil {
+			if err.Error() == "out of stock" || err.Error() == "insufficient stock" {
+				HandleError(context, http.StatusConflict, product.Name+" "+err.Error())
+				return
+			} else {
+				HandleDatabaseError(context, err)
+				return
+			}
 		}
 	}
 
-	context.JSON(http.StatusOK, gin.H{"message": "order success"})
+	err = repositories.UpdateOrderStatus(db, currentOrder)
+	if err != nil {
+		HandleDatabaseError(context, err)
+		return
+	}
 
+	context.JSON(http.StatusOK, gin.H{"message": "Order success"})
 }

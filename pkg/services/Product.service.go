@@ -12,19 +12,14 @@ import (
 
 func GetProductById(context *gin.Context, db *gorm.DB) {
 	id := context.Param("id")
-	if _, strconvErr := strconv.Atoi(id); strconvErr != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format"})
+	if _, err := strconv.Atoi(id); err != nil {
+		HandleError(context, http.StatusBadRequest, "Invalid ID format")
 		return
 	}
 	product, err := repositories.FindProductById(db, id)
 	if err != nil {
-		if err.Error() == "record not found" {
-			context.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
-			return
-		} else {
-			context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
+		HandleDatabaseError(context, err)
+		return
 	}
 	context.JSON(http.StatusOK, product)
 }
@@ -34,8 +29,12 @@ func GetProductListWithPagination(context *gin.Context, db *gorm.DB) {
 	size, _ := strconv.Atoi(context.DefaultQuery("size", "12"))
 	productList, total, err := repositories.FindProductListWithPagination(db, page, size)
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		HandleDatabaseError(context, err)
 		return
+	}
+
+	if len(productList) == 0 {
+		HandleError(context, http.StatusNoContent, "")
 	}
 
 	context.JSON(http.StatusOK, gin.H{
@@ -51,13 +50,18 @@ func SearchProductListByName(context *gin.Context, db *gorm.DB) {
 	size, _ := strconv.Atoi(context.DefaultQuery("size", "12"))
 	var name models.SearchTermPayload
 	if err := context.BindJSON(&name); err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON"})
+		HandleError(context, http.StatusBadRequest, "Invalid JSON")
 		return
 	}
 
 	productList, total, err := repositories.FindProductListByName(db, name, page, size)
+
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		HandleDatabaseError(context, err)
+		return
+	}
+	if len(productList) == 0 {
+		HandleError(context, http.StatusNotFound, "Record not found")
 		return
 	}
 
@@ -71,19 +75,14 @@ func SearchProductListByName(context *gin.Context, db *gorm.DB) {
 
 func CheckStockByProductId(context *gin.Context, db *gorm.DB) {
 	id := context.Param("id")
-	if _, strconvErr := strconv.Atoi(id); strconvErr != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format"})
+	if _, err := strconv.Atoi(id); err != nil {
+		HandleError(context, http.StatusBadRequest, "Invalid ID format")
 		return
 	}
 	stock, err := repositories.FindStockById(db, id)
 	if err != nil {
-		if err.Error() == "record not found" {
-			context.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
-			return
-		} else {
-			context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
+		HandleDatabaseError(context, err)
+		return
 	}
 	context.JSON(http.StatusOK, stock)
 }
