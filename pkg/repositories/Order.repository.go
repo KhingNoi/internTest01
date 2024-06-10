@@ -52,11 +52,11 @@ func UpdateProductStock(db *gorm.DB, amount int, productId int) (models.Product,
 	if err := db.First(&product, productId).Error; err != nil {
 		return product, err
 	}
-	if product.Stock == 0 {
-		return product, errors.New("out of stock")
-	}
 
 	if product.Stock < amount {
+		if product.Stock == 0 {
+			return product, errors.New("out of stock")
+		}
 		return product, errors.New("insufficient stock")
 	}
 
